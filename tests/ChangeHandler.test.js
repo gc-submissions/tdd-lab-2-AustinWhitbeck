@@ -30,6 +30,9 @@ describe("ChangeHandler", function() {
   // giveChange variables
   const changeHandler10 = new ChangeHandler(25); // return 1 quarter in the changeDue object
   const changeHandelerDue32 = new ChangeHandler(10); // return 32 cents as 1Q, 1N, 2P
+  const changeHandlerNickel1 = new ChangeHandler(10); // return 10 cents 1D
+  const changeHandlerDue27 = new ChangeHandler(27); // return 27 cents 1Q 2P
+  const changeHandlerDue68 = new ChangeHandler(68); // return 68 cents 2Q 1D 1N 3P
 
   ///** act **///
 
@@ -62,8 +65,35 @@ describe("ChangeHandler", function() {
   changeHandelerDue32.insertCoin('nickel');
   changeHandelerDue32.insertCoin('penny');
   changeHandelerDue32.insertCoin('penny');
-  changeHandelerDue32.giveChange();
 
+    // changeDue = 1D
+  changeHandlerNickel1.insertCoin('dime');
+  changeHandlerNickel1.insertCoin('dime');
+
+    // changeDue = 1Q 2P
+  changeHandlerDue27.insertCoin('quarter');
+  changeHandlerDue27.insertCoin('quarter');
+  changeHandlerDue27.insertCoin('penny');
+  changeHandlerDue27.insertCoin('penny');
+  changeHandlerDue27.insertCoin('penny');
+  changeHandlerDue27.insertCoin('penny');
+
+    // changeDue = 2Q 1D 1N 3P
+  changeHandlerDue68.insertCoin('quarter');
+  changeHandlerDue68.insertCoin('quarter');
+  changeHandlerDue68.insertCoin('quarter');
+  changeHandlerDue68.insertCoin('quarter');
+  changeHandlerDue68.insertCoin('dime');
+  changeHandlerDue68.insertCoin('dime');
+  changeHandlerDue68.insertCoin('nickel');
+  changeHandlerDue68.insertCoin('nickel');
+  changeHandlerDue68.insertCoin('penny');
+  changeHandlerDue68.insertCoin('penny');
+  changeHandlerDue68.insertCoin('penny');
+  changeHandlerDue68.insertCoin('penny');
+  changeHandlerDue68.insertCoin('penny');
+  changeHandlerDue68.insertCoin('penny');
+  
 
   ///** assert **///
 
@@ -108,13 +138,40 @@ describe("ChangeHandler", function() {
       })
     // 1Q 1N 2P
       test(' changeDue = 1Q 1N 2P', () => {
-        expect(changeHandelerDue32.changeDue).toEqual({
+        expect(changeHandelerDue32.giveChange()).toEqual(changeDue = {
           quarters: 1,
           dimes: 0,
           nickels: 1,
           pennies: 2
         })
       })
+    // 1D
+      test(' changeDue = 1D', () => {
+        expect(changeHandlerNickel1.giveChange()).toEqual(changeDue = {
+          quarters: 0,
+          dimes: 1,
+          nickels: 0,
+          pennies: 0
+        })
+      })
+    // changeDue = 1Q 2P
+    test(' changeDue = 1Q 2P', () => {
+      expect(changeHandlerDue27.giveChange()).toEqual(changeDue = {
+        quarters: 1,
+        dimes: 0,
+        nickels: 0,
+        pennies: 2
+      })
+    })
+    // return 68 cents 2Q 1D 1N 3P
+    test(' changeDue = 2Q 1D 1N 3P', () => {
+      expect(changeHandlerDue68.giveChange()).toEqual(changeDue = {
+        quarters: 2,
+        dimes: 1,
+        nickels: 1,
+        pennies: 3
+      })
+    })
     
 
 
